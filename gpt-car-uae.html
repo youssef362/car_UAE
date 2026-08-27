@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GPT Car — AI Sales &amp; Service Assistant for Car Dealers | UAE</title>
+<meta name="description" content="GPT Car is an AI assistant for car dealerships in the UAE. It answers every customer in seconds on WhatsApp, your website and social — trained on your official data and the real-world experience of actual owners. Pilot live in 3–5 days.">
+<meta name="theme-color" content="#0E2E38">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GPT Car">
+<meta property="og:title" content="GPT Car — AI Sales & Service Assistant for Car Dealers">
+<meta property="og:description" content="Answers every customer in seconds on WhatsApp, your website and social. Trained on your official data and real owner experience. Pilot in 3–5 days.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   GPT Car — UAE edition
+   Design tokens
+   ============================================================ */
+:root{
+  --ink:#06161C;          /* deepest */
+  --ink-2:#0B2530;        /* dark surface */
+  --petrol:#0E2E38;       /* hero base */
+  --petrol-2:#124049;
+  --teal:#1BC9AE;
+  --teal-deep:#0EA793;
+  --indigo:#5A6FF0;
+  --gold:#E6C88E;         /* premium accent — used with restraint */
+  --paper:#F4F8F8;
+  --card:#FFFFFF;
+  --line:#E1EBEB;
+  --line-soft:#EEF4F4;
+  --text:#0A2027;
+  --muted:#5E7178;
+  --on-dark:#ECF6F5;
+  --on-dark-muted:#A6C4C6;
+
+  --amber:#E8A13C;
+  --violet:#7C6CF0;
+
+  --r-sm:12px; --r:18px; --r-lg:26px; --r-xl:34px;
+  --maxw:1200px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --shadow-sm:0 2px 8px rgba(9,32,39,.06);
+  --shadow:0 18px 44px -22px rgba(9,32,39,.35);
+  --shadow-lg:0 40px 90px -40px rgba(9,32,39,.55);
+  --glow:0 0 0 1px rgba(27,201,174,.25), 0 24px 60px -24px rgba(27,201,174,.45);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--text);
+  background:var(--paper);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3{font-family:"Archivo",sans-serif;line-height:1.08;margin:0;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+ul{margin:0;padding:0;list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+.container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.text-teal{color:var(--teal-deep)}
+.text-indigo{color:var(--indigo)}
+.text-gold{color:#B98F3E}
+.mono{font-family:"Space Grotesk",monospace}
+
+/* focus visibility */
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{
+  outline:3px solid var(--indigo);outline-offset:2px;border-radius:6px;
+}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:"Manrope";font-weight:700;font-size:15px;letter-spacing:.01em;
+  padding:14px 26px;border-radius:999px;border:1px solid transparent;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s var(--ease),color .2s;
+  white-space:nowrap;
+}
+.btn-main{
+  color:#04262a;
+  background:linear-gradient(120deg,var(--teal) 0%,#3AD8BF 55%,var(--indigo) 165%);
+  box-shadow:0 14px 30px -14px rgba(27,201,174,.7);
+}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 22px 44px -16px rgba(27,201,174,.8)}
+.btn-outline{
+  background:transparent;border-color:rgba(255,255,255,.28);color:var(--on-dark);
+}
+.btn-outline:hover{border-color:var(--teal);color:#fff;transform:translateY(-2px)}
+.btn-outline.on-light{border-color:var(--line);color:var(--text)}
+.btn-outline.on-light:hover{border-color:var(--teal-deep);color:var(--teal-deep)}
+.btn-wa{background:#25D366;color:#04241a;box-shadow:0 14px 30px -14px rgba(37,211,102,.6)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 20px 40px -16px rgba(37,211,102,.75)}
+.btn-sm{padding:10px 20px;font-size:14px}
+
+/* ============================================================
+   Topbar
+   ============================================================ */
+.topbar{position:sticky;top:0;z-index:60;
+  background:rgba(8,25,31,.72);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.topbar-inner{display:flex;align-items:center;gap:24px;height:70px}
+.brand{display:flex;align-items:center;gap:11px;font-family:"Archivo";font-weight:800;
+  font-size:20px;letter-spacing:-.02em;color:var(--on-dark)}
+.brand-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(140deg,var(--teal),var(--indigo));box-shadow:0 8px 18px -8px rgba(27,201,174,.8)}
+.brand-mark svg{width:22px;height:22px}
+.brand em{font-style:normal;color:var(--teal)}
+.menu{display:flex;gap:26px;margin-left:8px}
+.menu a{color:var(--on-dark-muted);font-weight:600;font-size:14.5px;transition:color .2s;position:relative}
+.menu a:hover{color:#fff}
+.menu a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--teal);transition:width .25s var(--ease)}
+.menu a:hover::after{width:100%}
+.topbar-cta{margin-left:auto}
+.nav-toggle{display:none;margin-left:auto;background:none;border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;width:44px;height:40px;color:var(--on-dark)}
+.nav-toggle svg{width:22px;height:22px}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{position:relative;overflow:hidden;background:var(--petrol);color:var(--on-dark)}
+.hero-bg{position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 620px at 82% -8%,rgba(90,111,240,.28),transparent 60%),
+    radial-gradient(900px 560px at 6% 12%,rgba(27,201,174,.30),transparent 58%),
+    linear-gradient(180deg,#0E2E38 0%,#0A2530 60%,#08222b 100%);
+}
+.hero-grid-lines{position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at 60% 30%,#000 0%,transparent 75%);
+}
+.hero-inner{position:relative;display:grid;grid-template-columns:1.06fr .94fr;gap:56px;
+  align-items:center;padding:72px 0 96px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:"Space Grotesk";
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal);background:rgba(27,201,174,.10);border:1px solid rgba(27,201,174,.28);
+  padding:7px 14px;border-radius:999px;margin-bottom:22px}
+.hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 0 0 rgba(27,201,174,.7);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(27,201,174,.55)}70%{box-shadow:0 0 0 9px rgba(27,201,174,0)}100%{box-shadow:0 0 0 0 rgba(27,201,174,0)}}
+.hero h1{font-size:clamp(38px,5vw,60px);font-weight:800}
+.hero h1 .grad{background:linear-gradient(100deg,var(--teal),#6FE9D5 40%,var(--indigo));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-lead{margin-top:20px;font-size:clamp(17px,1.5vw,20px);color:#CDE6E6;max-width:37ch}
+.hero-lead b{color:#fff;font-weight:700}
+.src-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;align-items:center}
+.src-chips .src-label{font-size:13px;color:var(--on-dark-muted);font-weight:600;letter-spacing:.02em}
+.src-chips li{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
+  color:#DCEFEF;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  padding:6px 12px;border-radius:999px}
+.src-chips li svg{width:14px;height:14px;color:var(--teal)}
+.hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.hero-trust{display:flex;align-items:center;gap:9px;margin-top:22px;font-size:14px;color:#BCD9D9}
+.hero-trust svg{width:16px;height:16px;color:var(--teal);flex:none}
+
+/* Hero chat widget (signature) */
+.hero-shot{position:relative}
+.chat-widget{position:relative;width:100%;max-width:410px;margin-left:auto;
+  background:linear-gradient(180deg,#0d2b34,#0b2229);border:1px solid rgba(255,255,255,.10);
+  border-radius:var(--r-xl);box-shadow:var(--shadow-lg),var(--glow);overflow:hidden}
+.chat-widget::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(140deg,rgba(27,201,174,.12),transparent 40%);pointer-events:none}
+.chat-head{display:flex;align-items:center;gap:11px;padding:15px 18px;
+  background:linear-gradient(90deg,#0f3540,#0c2a33);border-bottom:1px solid rgba(255,255,255,.08)}
+.chat-avatar{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(140deg,var(--teal),var(--indigo));flex:none}
+.chat-avatar svg{width:24px;height:24px}
+.chat-head-meta{line-height:1.3}
+.chat-head-name{font-family:"Archivo";font-weight:700;font-size:15px;color:#fff}
+.chat-head-status{font-size:11.5px;color:var(--teal);display:flex;align-items:center;gap:6px}
+.chat-head-status .live{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2.2s infinite}
+.chat-source-tag{margin-left:auto;font-family:"Space Grotesk";font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--on-dark-muted);border:1px solid rgba(255,255,255,.14);
+  padding:4px 9px;border-radius:999px}
+.chat-body{padding:18px;min-height:340px;display:flex;flex-direction:column;gap:11px;
+  background:
+    radial-gradient(600px 300px at 100% 0,rgba(90,111,240,.08),transparent),
+    #0a222a}
+.bubble{max-width:82%;padding:11px 14px;border-radius:16px;font-size:14px;line-height:1.5;
+  opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.bubble.show{opacity:1;transform:none}
+.bubble.user{align-self:flex-end;background:linear-gradient(135deg,var(--indigo),#4a5fe0);
+  color:#fff;border-bottom-right-radius:5px}
+.bubble.bot{align-self:flex-start;background:#123842;color:#E7F5F4;border:1px solid rgba(255,255,255,.06);
+  border-bottom-left-radius:5px}
+.bubble.bot b{color:var(--teal)}
+.typing{align-self:flex-start;display:inline-flex;gap:5px;padding:13px 16px;background:#123842;
+  border-radius:16px;border-bottom-left-radius:5px;opacity:0;transform:translateY(10px);
+  transition:opacity .3s,transform .3s}
+.typing.show{opacity:1;transform:none}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--on-dark-muted);animation:blink 1.3s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.chat-actions{display:flex;gap:8px;flex-wrap:wrap;align-self:flex-start;
+  opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.chat-actions.show{opacity:1;transform:none}
+.action-btn{font-size:12.5px;font-weight:700;padding:8px 13px;border-radius:999px;
+  background:rgba(27,201,174,.14);color:var(--teal);border:1px solid rgba(27,201,174,.35)}
+.action-btn.ghost{background:transparent;color:#CDE6E6;border-color:rgba(255,255,255,.18)}
+.chat-footer{display:flex;align-items:center;gap:10px;padding:13px 16px;
+  border-top:1px solid rgba(255,255,255,.08);background:#0c2a33}
+.chat-footer span{flex:1;font-size:13px;color:var(--on-dark-muted)}
+.chat-footer button{width:36px;height:36px;border-radius:11px;border:none;
+  background:linear-gradient(135deg,var(--teal),var(--indigo));display:grid;place-items:center}
+.chat-footer button svg{width:16px;height:16px}
+
+/* ============================================================
+   Brand strip
+   ============================================================ */
+.brands{background:var(--ink-2);padding:30px 0;border-top:1px solid rgba(255,255,255,.06)}
+.brands-label{text-align:center;font-family:"Space Grotesk";font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--on-dark-muted);margin-bottom:18px}
+.brands-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 40px;align-items:center}
+.brand-word{font-family:"Archivo";font-weight:700;font-size:19px;letter-spacing:.06em;
+  color:#7FA0A3;opacity:.85;transition:color .2s,opacity .2s;text-transform:uppercase}
+.brand-word:hover{color:#CDE6E6;opacity:1}
+
+/* ============================================================
+   Sections (light)
+   ============================================================ */
+.section{padding:88px 0}
+.section-gray{background:linear-gradient(180deg,#EDF3F3,#F4F8F8)}
+.section-head{max-width:720px;margin:0 auto 52px;text-align:center}
+.section-head h2{font-size:clamp(28px,3.4vw,42px);font-weight:800}
+.section-head p{margin-top:14px;font-size:18px;color:var(--muted)}
+.eyebrow{display:inline-block;font-family:"Space Grotesk";font-size:12.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--teal-deep);
+  background:rgba(27,201,174,.10);border:1px solid rgba(27,201,174,.22);
+  padding:6px 13px;border-radius:999px;margin-bottom:16px}
+.center-cta{text-align:center;margin-top:44px}
+.cta-sub-note{margin-top:14px;font-size:14px;color:var(--muted)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============================================================
+   Demo band
+   ============================================================ */
+.demo-card{display:grid;grid-template-columns:1.4fr 1fr;gap:0;border-radius:var(--r-xl);
+  overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
+.demo-main{padding:44px;background:linear-gradient(150deg,#0E2E38,#0b232b);color:var(--on-dark)}
+.demo-badge{display:inline-flex;align-items:center;gap:8px;font-family:"Space Grotesk";
+  font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);
+  border:1px solid rgba(27,201,174,.3);padding:6px 12px;border-radius:999px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2.2s infinite}
+.demo-title{font-size:clamp(24px,3vw,32px);margin:18px 0 12px}
+.demo-text{color:#CDE6E6;max-width:44ch}
+.demo-text strong{color:#fff}
+.demo-ctas{margin-top:26px}
+.demo-note{padding:44px;display:flex;flex-direction:column;justify-content:center;gap:12px;background:var(--card)}
+.demo-note-title{font-family:"Archivo";font-weight:700;font-size:18px;color:var(--text)}
+.demo-note-text{color:var(--muted);font-size:15px}
+.demo-note .btn{margin-top:10px;align-self:flex-start}
+
+/* ============================================================
+   Traffic / benefits
+   ============================================================ */
+.pain-gain{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:34px}
+.pg-side{border-radius:var(--r-lg);padding:30px 28px;position:relative}
+.pg-pain{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.pg-gain{background:linear-gradient(150deg,#0E2E38,#0d272f);color:var(--on-dark)}
+.pg-tag{display:inline-block;font-family:"Space Grotesk";font-size:11.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:14px}
+.pg-tag-pain{background:#FCEBE7;color:#C1502E}
+.pg-tag-gain{background:rgba(27,201,174,.16);color:var(--teal)}
+.pg-num{display:block;font-family:"Archivo";font-weight:900;font-size:40px;color:var(--text);letter-spacing:-.03em}
+.pg-text{margin-top:8px;color:var(--muted);font-size:15.5px}
+.pg-gain .pg-text{color:#CDE6E6}
+.pg-gain .pg-text strong{color:#fff}
+.pg-kicker{margin-top:16px;font-weight:700;color:var(--teal);font-size:15px}
+.src-chips.on-teal{margin-top:16px}
+.pg-arrow{display:grid;place-items:center;width:52px;background:linear-gradient(135deg,var(--teal),var(--indigo));
+  border-radius:16px;align-self:center;height:56px}
+.pg-arrow svg{width:26px;height:26px}
+
+/* proof (CSS mock of a group search) */
+.tg-proof{display:grid;grid-template-columns:.9fr 1.1fr;gap:30px;align-items:center;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow-sm);margin-bottom:34px}
+.proof-shot{background:#0a222a;border-radius:var(--r);padding:16px;border:1px solid rgba(255,255,255,.06)}
+.proof-search{display:flex;align-items:center;gap:9px;background:#12333c;border-radius:10px;padding:9px 12px;margin-bottom:12px}
+.proof-search svg{width:15px;height:15px;color:var(--on-dark-muted)}
+.proof-search span{font-size:13px;color:#DCEFEF}
+.proof-search .cursor{width:1.5px;height:15px;background:var(--teal);margin-left:2px;animation:caret 1s step-end infinite}
+@keyframes caret{50%{opacity:0}}
+.proof-line{display:flex;gap:9px;margin:9px 0;align-items:flex-start}
+.proof-ava{width:26px;height:26px;border-radius:8px;flex:none;display:grid;place-items:center;
+  font-size:11px;font-weight:700;color:#fff}
+.proof-msg{font-size:12.5px;color:#B9D3D3;line-height:1.4}
+.proof-msg em{color:var(--teal);font-style:normal;font-weight:700;background:rgba(27,201,174,.15);padding:0 3px;border-radius:4px}
+.proof-count{font-family:"Space Grotesk";font-size:11px;color:var(--on-dark-muted);text-align:right;margin-top:8px;
+  padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
+.tg-proof-stat{font-family:"Archivo";font-weight:800;font-size:26px;color:var(--text)}
+.tg-proof-stat strong{color:var(--teal-deep)}
+.tg-proof-desc{margin-top:10px;color:var(--muted);font-size:15px}
+.tg-proof-desc strong{color:var(--text)}
+
+/* dialog with value */
+.dialog-bg{background:linear-gradient(150deg,#0E2E38,#0c242c);border-radius:var(--r-lg);padding:34px;color:var(--on-dark);margin-bottom:40px}
+.dialog-caption{text-align:center;font-family:"Archivo";font-weight:700;font-size:18px;margin-bottom:22px;color:#fff}
+.traffic-dialog{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.dialog-msg{display:flex;gap:12px;align-items:flex-start}
+.dialog-msg.bot-row{align-items:stretch;flex-wrap:wrap}
+.d-avatar{width:38px;height:38px;border-radius:12px;flex:none;display:grid;place-items:center;
+  font-weight:800;color:#fff;font-size:14px}
+.d-avatar.violet{background:linear-gradient(140deg,#7C6CF0,#5A6FF0)}
+.d-avatar.teal-av{background:linear-gradient(140deg,var(--teal),var(--indigo))}
+.d-avatar.teal-av svg{width:20px;height:20px}
+.d-bubble{background:#123842;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:12px 15px;flex:1;min-width:0}
+.d-bubble strong{display:block;font-size:12px;color:var(--teal);margin-bottom:4px}
+.d-bubble p{font-size:14px;color:#E7F5F4;margin:3px 0}
+.d-ico{margin-right:4px}
+.dialog-check{display:flex;align-items:center;gap:9px;background:rgba(27,201,174,.12);
+  border:1px solid rgba(27,201,174,.3);border-radius:14px;padding:10px 15px;margin-left:50px;width:fit-content}
+.check-card-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(140deg,var(--teal),var(--indigo));display:grid;place-items:center}
+.check-card-icon svg{width:20px;height:20px}
+.check-label{font-size:13px;color:var(--on-dark-muted)}
+.dialog-check strong{font-family:"Space Grotesk";font-size:17px;color:#fff}
+
+/* feature cards */
+.traffic-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.t-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:30px 26px;
+  box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.t-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.t-card-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;margin-bottom:18px;
+  color:#fff;font-family:"Space Grotesk";font-weight:700;font-size:14px}
+.t-card-icon.vin{background:linear-gradient(140deg,#5A6FF0,#4658d8)}
+.t-card-icon.forum{background:linear-gradient(140deg,var(--teal),var(--teal-deep))}
+.t-card-icon.service{background:linear-gradient(140deg,#E6C88E,#d4ad63);color:#3a2c0e}
+.t-card-icon svg{width:24px;height:24px}
+.t-card h3{font-size:19px;margin-bottom:9px}
+.t-card p{color:var(--muted);font-size:15px}
+
+/* ============================================================
+   Real examples
+   ============================================================ */
+.ex-control{display:flex;gap:15px;align-items:flex-start;background:#fff;border:1px solid var(--line);
+  border-left:4px solid var(--teal);border-radius:var(--r);padding:20px 24px;margin-bottom:30px;box-shadow:var(--shadow-sm)}
+.ex-control-ico{width:40px;height:40px;border-radius:11px;background:rgba(27,201,174,.12);
+  color:var(--teal-deep);display:grid;place-items:center;flex:none}
+.ex-control-ico svg{width:22px;height:22px}
+.ex-control p{color:var(--muted);font-size:15px}
+.ex-control b{color:var(--text)}
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ex-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column;gap:9px;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.ex-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.ex-q{font-family:"Archivo";font-weight:700;font-size:15.5px;color:var(--text)}
+.ex-a{color:var(--muted);font-size:14.5px}
+.ex-a b{color:var(--text)}
+.ex-quote{margin:0;padding:11px 14px;background:#F1F7F6;border-radius:12px;border-left:3px solid var(--teal);
+  font-style:italic;font-size:13.5px;color:#3f5257}
+.ex-tag{align-self:flex-start;margin-top:auto;font-family:"Space Grotesk";font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;padding:5px 11px;border-radius:999px;background:#EAF0F0;color:#5f7378;font-weight:600}
+.ex-tag.ex-tag-info{background:#EAEEFF;color:#4a5fd0}
+.ex-tag.ex-tag-do{background:rgba(27,201,174,.14);color:var(--teal-deep)}
+.ex-more-wrap{text-align:center;margin-top:26px}
+.ex-foot{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:34px}
+.ex-note{color:var(--muted);font-size:14px;text-align:center;max-width:52ch}
+
+/* ============================================================
+   Manager
+   ============================================================ */
+.manager-block{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.manager-text h2{font-size:clamp(26px,3.2vw,38px)}
+.manager-tagline{margin:16px 0 26px;font-size:20px;color:var(--muted)}
+.manager-tagline .text-teal{font-weight:800}
+.manager-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-bottom:30px}
+.col-head{font-family:"Archivo";font-weight:700;font-size:16px;margin-bottom:12px;color:var(--text)}
+.manager-col li{position:relative;padding-left:26px;margin-bottom:10px;color:var(--muted);font-size:14.5px}
+.manager-col li::before{content:"";position:absolute;left:0;top:8px;width:15px;height:15px;border-radius:50%;
+  background:rgba(27,201,174,.16);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230EA793' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-size:11px;background-repeat:no-repeat;background-position:center}
+.manager-art{background:linear-gradient(150deg,#0E2E38,#0c242c);border-radius:var(--r-xl);padding:36px;
+  color:var(--on-dark);box-shadow:var(--shadow)}
+.ring-wrap{display:flex;align-items:center;gap:26px}
+.ring{position:relative;width:150px;height:150px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring-num{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-num strong{font-family:"Space Grotesk";font-size:34px;color:#fff;display:block;line-height:1}
+.ring-num span{font-size:12px;color:var(--on-dark-muted)}
+.ring-side p{color:#CDE6E6;font-size:14.5px;margin-bottom:14px}
+.ring-side .badge-24{display:inline-flex;align-items:center;gap:8px;font-family:"Space Grotesk";font-weight:700;
+  color:var(--teal);border:1px solid rgba(27,201,174,.3);border-radius:999px;padding:8px 15px;font-size:14px}
+.manager-mini{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.mini-stat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:15px}
+.mini-stat strong{font-family:"Space Grotesk";font-size:22px;color:#fff;display:block}
+.mini-stat span{font-size:12.5px;color:var(--on-dark-muted)}
+
+/* ============================================================
+   Scenarios
+   ============================================================ */
+.scn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.scn-col{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column}
+.scn-title{font-size:18px;margin-bottom:14px}
+.scn-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.scn-chip{font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:999px;border:1px solid var(--line);
+  background:#F5F8F8;color:var(--muted);transition:all .2s}
+.scn-chip:hover{border-color:var(--teal);color:var(--teal-deep)}
+.scn-chip.is-active{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+.scn-chat{background:#F5F8F8;border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;flex:1}
+.scn-msg{display:flex;gap:11px;align-items:flex-start}
+.scn-msg .d-avatar{width:32px;height:32px;font-size:12px}
+.scn-msg .d-avatar svg{width:17px;height:17px}
+.scn-msg>div:last-child{flex:1;min-width:0}
+.scn-msg strong{display:block;font-size:11.5px;color:var(--muted);margin-bottom:3px}
+.scn-msg.client p{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 13px;font-size:13.5px;color:var(--text)}
+.scn-msg.bot p{background:linear-gradient(135deg,rgba(27,201,174,.12),rgba(90,111,240,.10));
+  border:1px solid rgba(27,201,174,.22);border-radius:14px;padding:9px 13px;font-size:13.5px;color:var(--text);transition:opacity .25s}
+.scn-more{margin-top:14px;font-size:12.5px;color:var(--teal-deep);font-weight:700}
+.scn-kb{margin-top:34px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow-sm)}
+.scn-kb-title{display:flex;align-items:center;gap:10px;font-size:18px;margin-bottom:20px}
+.scn-kb-ico{width:38px;height:38px;border-radius:11px;background:rgba(27,201,174,.12);display:grid;place-items:center}
+.scn-kb-ico svg{width:20px;height:20px}
+.scn-kb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kb-card{border:1px solid var(--line);border-radius:var(--r);padding:18px;background:#FAFCFC}
+.kb-badge{display:inline-block;font-family:"Space Grotesk";font-size:10.5px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:11px}
+.badge-green{background:rgba(27,201,174,.16);color:var(--teal-deep)}
+.badge-blue{background:#EAEEFF;color:#4a5fd0}
+.badge-amber{background:#FCEEDA;color:#B47B24}
+.kb-name{font-family:"Archivo";font-weight:700;font-size:14.5px;color:var(--text)}
+.kb-desc{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* ============================================================
+   Analytics
+   ============================================================ */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px}
+.kpi-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow-sm)}
+.kpi-card.kpi-accent{background:linear-gradient(150deg,#0E2E38,#0c242c);border-color:transparent;color:var(--on-dark)}
+.kpi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.kpi-label{font-size:13px;color:var(--muted);font-weight:600}
+.kpi-accent .kpi-label{color:var(--on-dark-muted)}
+.kpi-tag{font-family:"Space Grotesk";font-size:10.5px;color:var(--muted);background:#F0F5F5;padding:4px 9px;border-radius:999px}
+.kpi-accent .kpi-tag{background:rgba(255,255,255,.08);color:var(--on-dark-muted)}
+.kpi-value{font-family:"Space Grotesk";font-weight:700;font-size:38px;letter-spacing:-.02em;color:var(--text);line-height:1}
+.kpi-accent .kpi-value{color:#fff}
+.kpi-value .kpi-suffix{font-size:20px;color:var(--muted)}
+.kpi-delta{font-size:13px;font-weight:700;margin-top:8px}
+.kpi-delta.up{color:var(--teal-deep)}
+.kpi-accent .kpi-delta.up{color:var(--teal)}
+.kpi-note{font-size:12.5px;color:var(--muted);margin-top:8px}
+.kpi-accent .kpi-note{color:var(--on-dark-muted)}
+.kpi-stars{margin-top:6px;color:var(--gold);font-size:16px;letter-spacing:2px}
+.kpi-stars .star-empty{color:#DCE4E4}
+
+.funnel-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;box-shadow:var(--shadow-sm)}
+.funnel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:8px}
+.funnel-head h3{font-size:19px}
+.funnel-period{font-family:"Space Grotesk";font-size:12.5px;color:var(--muted);background:#F0F5F5;padding:5px 12px;border-radius:999px}
+.funnel-row{display:grid;grid-template-columns:1fr 42px;gap:16px;align-items:center;margin-bottom:16px}
+.funnel-info{display:flex;justify-content:space-between;margin-bottom:7px;flex-wrap:wrap;gap:4px}
+.funnel-step{font-size:14px;color:var(--text);font-weight:600}
+.funnel-num{font-family:"Space Grotesk";font-size:13.5px;font-weight:600}
+.funnel-bar{grid-column:1;height:12px;background:#EEF3F3;border-radius:999px;overflow:hidden}
+.funnel-fill{display:block;height:100%;width:0;border-radius:999px;transition:width 1.2s var(--ease)}
+.f-blue{background:linear-gradient(90deg,#5A6FF0,#4658d8)}
+.f-teal{background:linear-gradient(90deg,var(--teal),var(--teal-deep))}
+.f-amber{background:linear-gradient(90deg,#E8A13C,#d68a24)}
+.f-violet{background:linear-gradient(90deg,#7C6CF0,#5A6FF0)}
+.funnel-conv{font-family:"Space Grotesk";font-weight:700;font-size:14px;text-align:right;color:var(--text)}
+.funnel-foot{margin-top:8px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.funnel-foot strong{color:var(--teal-deep)}
+.text-blue{color:#4a5fd0}.text-amber{color:#c88526}.text-violet{color:#6a5cd8}
+
+/* ============================================================
+   How it works
+   ============================================================ */
+.how-diagram{display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:center}
+.how-col-title{font-family:"Space Grotesk";font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;text-align:center}
+.how-node{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);
+  border-radius:var(--r);padding:15px 18px;margin-bottom:13px;box-shadow:var(--shadow-sm)}
+.how-right .how-node{flex-direction:row}
+.how-node-name{font-size:14.5px;font-weight:600;color:var(--text)}
+.how-node-ico{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none}
+.how-node-ico.blue{background:#EAEEFF;color:#4a5fd0}
+.how-node-ico.teal{background:rgba(27,201,174,.14);color:var(--teal-deep)}
+.how-node-ico svg{width:22px;height:22px}
+.how-center{display:grid;place-items:center}
+.how-core{width:170px;height:170px;border-radius:50%;background:linear-gradient(150deg,#0E2E38,#0c242c);
+  display:grid;place-content:center;text-align:center;color:#fff;position:relative;box-shadow:var(--glow)}
+.how-core::before{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px dashed rgba(27,201,174,.4);animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.how-core-ico svg{width:46px;height:46px;margin:0 auto 6px}
+.how-core-name{font-family:"Archivo";font-weight:800;font-size:19px}
+.how-core-sub{font-family:"Space Grotesk";font-size:11.5px;color:var(--teal);letter-spacing:.06em}
+
+/* ============================================================
+   Pricing
+   ============================================================ */
+.pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:820px;margin:0 auto}
+.price-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column}
+.price-card.price-featured{border:2px solid var(--teal);box-shadow:var(--shadow);position:relative}
+.price-card-header{background:linear-gradient(90deg,var(--teal),var(--indigo));color:#04262a;text-align:center;
+  font-family:"Space Grotesk";font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:10px}
+.price-card-body{padding:30px 28px;display:flex;flex-direction:column;flex:1}
+.plan-name{font-family:"Archivo";font-weight:800;font-size:22px;color:var(--text)}
+.plan-desc{color:var(--muted);font-size:14.5px;margin:8px 0 18px;min-height:42px}
+.plan-price{font-family:"Space Grotesk";font-weight:700;font-size:34px;color:var(--text);margin-bottom:20px}
+.plan-suffix{font-size:15px;color:var(--muted);font-weight:500}
+.plan-features li{position:relative;padding-left:28px;margin-bottom:11px;color:var(--muted);font-size:14.5px}
+.plan-features li::before{content:"";position:absolute;left:0;top:6px;width:16px;height:16px;border-radius:50%;
+  background:rgba(27,201,174,.16);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230EA793' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-size:11px;background-repeat:no-repeat;background-position:center}
+
+/* ============================================================
+   Pilot
+   ============================================================ */
+.section-head-pilot .pilot-badge{display:inline-block;margin-top:14px;font-family:"Space Grotesk";
+  font-size:13px;font-weight:600;color:var(--teal-deep);background:rgba(27,201,174,.12);
+  border:1px solid rgba(27,201,174,.24);padding:7px 15px;border-radius:999px}
+.pilot-offer{display:flex;gap:15px;align-items:center;background:linear-gradient(120deg,rgba(27,201,174,.1),rgba(90,111,240,.08));
+  border:1px solid rgba(27,201,174,.24);border-radius:var(--r);padding:20px 24px;margin-bottom:34px;max-width:760px;margin-left:auto;margin-right:auto}
+.pilot-offer-ico{width:44px;height:44px;border-radius:12px;background:linear-gradient(140deg,var(--teal),var(--indigo));
+  color:#fff;display:grid;place-items:center;flex:none}
+.pilot-offer-ico svg{width:22px;height:22px}
+.pilot-offer p{font-size:15px;color:var(--text)}
+.pilot-offer b{color:var(--teal-deep)}
+.pilot-steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:14px;align-items:stretch;margin-bottom:26px}
+.pilot-steps article{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 22px;box-shadow:var(--shadow-sm);text-align:center}
+.step-num{width:40px;height:40px;border-radius:50%;background:linear-gradient(140deg,var(--teal),var(--indigo));
+  color:#04262a;font-family:"Archivo";font-weight:800;display:grid;place-items:center;margin:0 auto 12px}
+.step-day{font-family:"Space Grotesk";font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-deep);font-weight:600}
+.pilot-steps h3{font-size:16px;margin:9px 0 7px}
+.pilot-steps p{color:var(--muted);font-size:14px}
+.step-arrow{display:grid;place-items:center;color:var(--teal);font-size:26px;font-weight:700}
+.pilot-effort{text-align:center;color:var(--muted);font-size:15px;margin-bottom:36px}
+.pilot-effort b{color:var(--text)}
+.pilot-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:34px}
+.pilot-box{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow-sm)}
+.pilot-box h3{font-size:17px;margin-bottom:16px}
+.pilot-box li{position:relative;padding-left:22px;margin-bottom:9px;color:var(--muted);font-size:14px}
+.pilot-box li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--teal)}
+.pilot-box.pilot-goal{background:linear-gradient(150deg,#0E2E38,#0c242c);color:var(--on-dark)}
+.pilot-goal .goal-label{font-family:"Space Grotesk";font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+.pilot-goal .goal-list li{color:#CDE6E6}
+.pilot-goal .goal-list li::before{background:var(--teal)}
+.pilot-channels{text-align:center;margin-bottom:20px}
+.channels-title{font-family:"Space Grotesk";font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.channels-list{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.channels-list span{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text);
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;box-shadow:var(--shadow-sm)}
+.channels-list span svg{width:15px;height:15px;color:var(--teal-deep)}
+
+/* ============================================================
+   Exclusivity
+   ============================================================ */
+.exclusive-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+.city-panel{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow-sm)}
+.city-panel-title{font-family:"Archivo";font-weight:700;font-size:17px;margin-bottom:18px}
+.city-table{width:100%;border-collapse:collapse}
+.city-table td{padding:12px 8px;border-bottom:1px solid var(--line-soft);font-size:14.5px}
+.city-table td strong{color:var(--text)}
+.tag{font-family:"Space Grotesk";font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 11px;border-radius:999px;white-space:nowrap}
+.tag.busy{background:#F3E6E4;color:#B65138}
+.tag.free{background:rgba(27,201,174,.16);color:var(--teal-deep)}
+.tag.check{background:#FCEEDA;color:#B47B24}
+.city-note{margin-top:16px;font-size:12.5px;color:var(--muted)}
+.exclusive-note{background:linear-gradient(150deg,#0E2E38,#0c242c);color:var(--on-dark);border-radius:var(--r-lg);
+  padding:32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.exclusive-note::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(230,200,142,.3),transparent 70%)}
+.exclusive-note .lock-badge{display:inline-flex;align-items:center;gap:8px;font-family:"Space Grotesk";font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(230,200,142,.4);
+  padding:6px 13px;border-radius:999px;margin-bottom:18px}
+.exclusive-note .lock-badge svg{width:14px;height:14px}
+.exclusive-note h3{font-size:22px;color:#fff;margin-bottom:12px}
+.exclusive-note p{color:#CDE6E6;font-size:15px}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-list details{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm)}
+.faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 22px;
+  cursor:pointer;list-style:none;font-family:"Archivo";font-weight:600;font-size:16px;color:var(--text)}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-arrow{width:20px;height:20px;flex:none;stroke:var(--teal-deep);fill:none;stroke-width:2;transition:transform .3s var(--ease)}
+.faq-list details[open] .faq-arrow{transform:rotate(180deg)}
+.faq-list details>p,.faq-list .faq-body{padding:0 22px 20px;color:var(--muted);font-size:14.5px}
+.faq-body ul{margin:10px 0}
+.faq-body li{position:relative;padding-left:20px;margin-bottom:7px}
+.faq-body li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+/* ============================================================
+   Lead CTA
+   ============================================================ */
+.cta{padding:88px 0;background:
+  radial-gradient(800px 400px at 80% 0,rgba(90,111,240,.25),transparent 60%),
+  radial-gradient(700px 400px at 0% 100%,rgba(27,201,174,.22),transparent 60%),
+  linear-gradient(160deg,#0E2E38,#08222b)}
+.cta-card{max-width:620px;margin:0 auto;text-align:center;color:var(--on-dark)}
+.cta-card h2{font-size:clamp(28px,3.5vw,40px);color:#fff}
+.cta-card-sub{margin:14px 0 30px;color:#CDE6E6;font-size:17px}
+.lead-form{display:flex;flex-direction:column;gap:14px;text-align:left}
+.lead-form input{width:100%;padding:15px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.06);color:#fff;font-size:15px;font-family:inherit;transition:border .2s,background .2s}
+.lead-form input::placeholder{color:#8FB0B2}
+.lead-form input:focus{outline:none;border-color:var(--teal);background:rgba(255,255,255,.1)}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.robot-check{display:flex;align-items:center;gap:11px;padding:13px 16px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:#CDE6E6;font-size:14px}
+.robot-check input{width:20px;height:20px;flex:none;accent-color:var(--teal)}
+.form-submit{margin-top:6px;padding:16px;font-size:16px;border:none}
+.form-status{text-align:center;font-size:14px;min-height:20px;font-weight:600}
+.form-status.ok{color:var(--teal)}
+.form-status.err{color:#FF9E86}
+.msg-label{text-align:center;color:#8FB0B2;font-size:13px;margin-top:6px}
+.messengers{display:flex;justify-content:center;gap:12px}
+.msg-btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:999px;font-weight:700;font-size:15px}
+.msg-btn.wa{background:#25D366;color:#04241a}
+.msg-btn svg{width:18px;height:18px}
+
+/* ============================================================
+   Sticky CTA + footer
+   ============================================================ */
+.sticky-cta{position:fixed;bottom:22px;right:22px;z-index:70;padding:15px 26px;border-radius:999px;
+  background:linear-gradient(120deg,var(--teal),var(--indigo));color:#04262a;font-weight:700;font-size:15px;
+  box-shadow:0 20px 40px -14px rgba(27,201,174,.7);opacity:0;transform:translateY(20px);pointer-events:none;
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.sticky-cta.show{opacity:1;transform:none;pointer-events:auto}
+.footer{background:var(--ink);color:var(--on-dark-muted);padding:40px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer .brand{color:#fff}
+.footer-tagline{font-size:14px}
+.footer-copy{font-size:13.5px}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width:960px){
+  .hero-inner{grid-template-columns:1fr;gap:40px;padding:52px 0 70px}
+  .chat-widget{margin:0 auto}
+  .demo-card,.manager-block,.exclusive-grid,.tg-proof{grid-template-columns:1fr}
+  .traffic-cards,.ex-grid,.scn-grid,.scn-kb-grid,.kpi-grid,.pilot-info-grid,.manager-cols{grid-template-columns:1fr 1fr}
+  .how-diagram{grid-template-columns:1fr}
+  .how-center{margin:8px 0}
+  .pilot-steps{grid-template-columns:1fr}
+  .step-arrow{transform:rotate(90deg)}
+}
+@media (max-width:680px){
+  .menu{display:none}
+  .topbar-cta{display:none}
+  .nav-toggle{display:grid;place-items:center}
+  .menu.open{display:flex;position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;
+    background:rgba(8,25,31,.98);backdrop-filter:blur(14px);padding:12px 24px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .menu.open a{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .section{padding:60px 0}
+  .traffic-cards,.ex-grid,.scn-grid,.scn-kb-grid,.kpi-grid,.pilot-info-grid,.pricing-grid,.manager-cols,.form-row-2{grid-template-columns:1fr}
+  .pain-gain{grid-template-columns:1fr}
+  .pg-arrow{width:56px;margin:0 auto;transform:rotate(90deg)}
+  .ring-wrap{flex-direction:column;text-align:center}
+  .sticky-cta{left:16px;right:16px;bottom:16px;text-align:center}
+  .demo-main,.demo-note{padding:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ Topbar ══════════════ -->
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="#top" aria-label="GPT Car">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="1.5" fill="#fff"/><rect x="8" y="11" width="12" height="9" rx="3.5" fill="#fff"/><circle cx="11.4" cy="15" r="1.3" fill="#0EA793"/><circle cx="16.6" cy="15" r="1.3" fill="#0EA793"/><rect x="13.2" y="6.6" width="1.6" height="2.6" rx="0.8" fill="#fff"/></svg>
+      </span>
+      GPT&nbsp;<em>Car</em>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#benefits">Features</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#price">Pricing</a>
+      <a href="#pilot">Pilot</a>
+      <a href="#exclusive">Exclusive</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-main btn-sm topbar-cta" href="#lead">Book a pilot</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ══════════════ Hero ══════════════ -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-grid-lines" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="hero-eyebrow"><span class="dot"></span> AI assistant for automotive retail</span>
+        <h1><span class="grad">GPT Car</span> — the AI assistant for car dealers &amp; brands</h1>
+        <p class="hero-lead">Answers every customer in seconds — on <b>WhatsApp</b>, your website and social — using your official data <b>and the real-world experience of actual owners</b>, not just dry manuals.</p>
+        <ul class="src-chips" aria-label="Knowledge sources">
+          <li class="src-label">Sources:</li>
+          <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.3-1.7A12 12 0 1 0 12 0Zm0 21.8c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8Z"/></svg> WhatsApp groups</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.9L3 21l1.9-5.2A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg> Owner forums</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><line x1="8.1" y1="10.8" x2="15.9" y2="6.2"/><line x1="8.1" y1="13.2" x2="15.9" y2="17.8"/></svg> Social</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Official docs</li>
+        </ul>
+        <div class="hero-ctas">
+          <a class="btn btn-main" href="#lead">Book a pilot</a>
+          <a class="btn btn-outline" href="#how">How it works</a>
+        </div>
+        <p class="hero-trust">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Pilot live in 3–5 days · first 100 customer chats free
+        </p>
+      </div>
+
+      <div class="hero-shot">
+        <div class="chat-widget" aria-label="Live demo of the assistant">
+          <div class="chat-head">
+            <span class="chat-avatar" aria-hidden="true">
+              <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="1.5" fill="#fff"/><rect x="8" y="11" width="12" height="9" rx="3.5" fill="#fff"/><circle cx="11.4" cy="15" r="1.3" fill="#0EA793"/><circle cx="16.6" cy="15" r="1.3" fill="#0EA793"/></svg>
+            </span>
+            <span class="chat-head-meta">
+              <span class="chat-head-name">Dealership assistant</span>
+              <span class="chat-head-status"><span class="live"></span> Online · replies instantly</span>
+            </span>
+            <span class="chat-source-tag">Live</span>
+          </div>
+          <div class="chat-body" id="chatBody">
+            <!-- messages injected by JS -->
+          </div>
+          <div class="chat-footer">
+            <span>Ask anything about a car…</span>
+            <button type="button" aria-label="Send">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Brand strip ══════════════ -->
+  <section class="brands">
+    <div class="container">
+      <p class="brands-label">Built for dealerships representing the region's leading brands</p>
+      <div class="brands-row" aria-label="Car brands">
+        <span class="brand-word">Toyota</span>
+        <span class="brand-word">Nissan</span>
+        <span class="brand-word">Lexus</span>
+        <span class="brand-word">GMC</span>
+        <span class="brand-word">Land&nbsp;Rover</span>
+        <span class="brand-word">Geely</span>
+        <span class="brand-word">MG</span>
+        <span class="brand-word">Chery</span>
+        <span class="brand-word">BYD</span>
+        <span class="brand-word">Changan</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Live demo ══════════════ -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="demo-card reveal">
+        <div class="demo-main">
+          <span class="demo-badge"><span class="live-dot"></span> Live demo</span>
+          <h2 class="demo-title">Try the assistant right now</h2>
+          <p class="demo-text">Our demo bot answers common questions about the <strong>Geely&nbsp;Coolray</strong> — ask your own question on WhatsApp and see exactly how it responds.</p>
+          <div class="demo-ctas">
+            <a class="btn btn-wa" href="https://wa.me/971500000000?text=Hi%20GPT%20Car%20demo" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.3-1.7A12 12 0 1 0 12 0Zm0 21.8c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8Z"/></svg>
+              Open demo on WhatsApp
+            </a>
+          </div>
+        </div>
+        <aside class="demo-note">
+          <p class="demo-note-title">This is a demo on a budget model</p>
+          <p class="demo-note-text">It runs on a low-cost model. On a stronger model the answers get sharper and go deeper — we'll size the right solution for your brand.</p>
+          <a class="btn btn-main" href="#lead">Scope it for my brand</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Traffic / benefits ══════════════ -->
+  <section class="section section-gray" id="benefits">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The opportunity</span>
+        <h2>A new channel of <span class="text-teal">traffic</span> and <span class="text-indigo">sales</span></h2>
+      </div>
+
+      <div class="pain-gain reveal">
+        <div class="pg-side pg-pain">
+          <span class="pg-tag pg-tag-pain">Today</span>
+          <span class="pg-num">90 minutes</span>
+          <p class="pg-text">the average owner spends hunting answers in forums and WhatsApp groups <strong>before they ever reach a dealer</strong> — and they often stay with whoever answered first. Not you.</p>
+        </div>
+        <div class="pg-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </div>
+        <div class="pg-side pg-gain">
+          <span class="pg-tag pg-tag-gain">With GPT Car</span>
+          <p class="pg-text"><strong>All that experience already lives inside your bot.</strong> It answers first and to the point — like a seasoned owner, but speaking for your dealership.</p>
+          <ul class="src-chips on-teal" aria-label="Knowledge sources">
+            <li><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.3-1.7A12 12 0 1 0 12 0Z"/></svg>WhatsApp</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.9L3 21l1.9-5.2A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg>Forums</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><line x1="8.1" y1="10.8" x2="15.9" y2="6.2"/><line x1="8.1" y1="13.2" x2="15.9" y2="17.8"/></svg>Social</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Official data</li>
+          </ul>
+          <p class="pg-kicker">The customer gets their answer from you — and stays with you.</p>
+        </div>
+      </div>
+
+      <!-- proof -->
+      <div class="tg-proof reveal">
+        <div class="proof-shot" aria-hidden="true">
+          <div class="proof-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.7" y2="16.7"/></svg>
+            <span>ac cooling</span><span class="cursor"></span>
+          </div>
+          <div class="proof-line"><span class="proof-ava" style="background:#7C6CF0">A</span><span class="proof-msg">"<em>AC cooling</em> weak first 5 min in summer, better after driving…"</span></div>
+          <div class="proof-line"><span class="proof-ava" style="background:#5A6FF0">R</span><span class="proof-msg">changed cabin filter + gas top-up, "<em>AC cooling</em> like new now"</span></div>
+          <div class="proof-line"><span class="proof-ava" style="background:#0EA793">S</span><span class="proof-msg">anyone else's "<em>AC cooling</em>" struggle in Dubai July heat?</span></div>
+          <div class="proof-count">2,340 messages found · Patrol Owners UAE</div>
+        </div>
+        <div class="tg-proof-text">
+          <p class="tg-proof-stat"><strong>2,340 messages</strong> — just about "AC cooling"</p>
+          <p class="tg-proof-desc">In a single owners' group. This is the real experience customers leave your funnel to find. Normally a dealer can't see it — <strong>GPT Car gathers it and answers for you.</strong></p>
+        </div>
+      </div>
+
+      <!-- dialog with value -->
+      <div class="dialog-bg reveal">
+        <p class="dialog-caption">Every conversation is a sales opportunity</p>
+        <div class="traffic-dialog">
+          <div class="dialog-msg client">
+            <div class="d-avatar violet">C</div>
+            <div class="d-bubble"><strong>Customer</strong><p>Knocking from the suspension after summer — normal?</p></div>
+          </div>
+          <div class="dialog-msg bot-row">
+            <div class="d-avatar teal-av" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="1.4" fill="#fff"/><rect x="8" y="11" width="12" height="9" rx="3.5" fill="#fff"/><circle cx="11.4" cy="15" r="1.3" fill="#5A6FF0"/><circle cx="16.6" cy="15" r="1.3" fill="#5A6FF0"/></svg></div>
+            <div class="d-bubble">
+              <strong>GPT Car</strong>
+              <p><span class="d-ico">🏆</span> <b>Official:</b> check the stabiliser bushings</p>
+              <p><span class="d-ico">👥</span> <b>Owners:</b> also inspect the ball joints</p>
+              <p><span class="d-ico">🚗</span> <b>Us:</b> full diagnostics at 25% off this week</p>
+            </div>
+            <div class="dialog-check">
+              <span class="check-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+              <span class="check-label">Est. ticket:</span>
+              <strong>AED 320</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- feature cards -->
+      <div class="traffic-cards">
+        <article class="t-card reveal">
+          <div class="t-card-icon vin"><span>VIN</span></div>
+          <h3>Knows your lineup down to the VIN</h3>
+          <p>The assistant knows your official brand data — every model, trim, part number, and even individual VINs.</p>
+        </article>
+        <article class="t-card reveal">
+          <div class="t-card-icon forum">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>
+          </div>
+          <h3>A library of real-owner fixes</h3>
+          <p>It folds in the experience of popular forums and recommendations from real owners of your cars.</p>
+        </article>
+        <article class="t-card reveal">
+          <div class="t-card-icon service">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <h3>Intelligent service that sells</h3>
+          <p>It explains problems and fixes, then offers your dealership's services with personalised perks and discounts.</p>
+        </article>
+      </div>
+
+      <div class="center-cta"><a class="btn btn-main" href="#lead">Book a pilot</a></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Real answers ══════════════ -->
+  <section class="section" id="examples">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Real answers</span>
+        <h2>How the assistant actually replies</h2>
+        <p>Real questions from Geely Coolray owners — answered from genuine owner experience. Not invented: you'll get the same answers in the live demo.</p>
+      </div>
+
+      <div class="ex-control reveal">
+        <span class="ex-control-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <p><b>You control the assistant.</b> You set its tone and exactly what it shares — you can exclude advice that voids warranty, or flag it right in the reply: "this fix voids your warranty."</p>
+      </div>
+
+      <div class="ex-grid" id="exGrid">
+        <article class="ex-card">
+          <p class="ex-q">Real fuel consumption on a Coolray?</p>
+          <p class="ex-a">Driven calmly, owners steadily see <b>7–7.5 L/100km</b> in mixed use.</p>
+          <blockquote class="ex-quote">"average 7 to 7.5, very relaxed driving style"</blockquote>
+          <span class="ex-tag">from owner chats</span>
+        </article>
+        <article class="ex-card">
+          <p class="ex-q">Stock brakes feel weak — what helps?</p>
+          <p class="ex-a">Owners swap the factory pads for better ones — noticeably stronger bite.</p>
+          <blockquote class="ex-quote">"stock pads are rubbish… brakes felt sharper straight away"</blockquote>
+          <span class="ex-tag">from owner chats</span>
+        </article>
+        <article class="ex-card">
+          <p class="ex-q">AC not cooling fast in summer?</p>
+          <p class="ex-a">Common in peak heat — a cabin-filter change plus a gas top-up usually fixes it.</p>
+          <blockquote class="ex-quote">"filter + regas and the AC blows ice cold again"</blockquote>
+          <span class="ex-tag">from owner chats</span>
+        </article>
+        <article class="ex-card">
+          <p class="ex-q">Coolray vs a rival CVT — reliability?</p>
+          <p class="ex-a">Owners don't complain about the Coolray CVT; they warn about early issues elsewhere.</p>
+          <blockquote class="ex-quote">"the other one's CVT gave up around 65k km"</blockquote>
+          <span class="ex-tag ex-tag-info">owner comparison</span>
+        </article>
+        <article class="ex-card">
+          <p class="ex-q">What's missing on the base trim?</p>
+          <p class="ex-a">No 360° camera, no wireless charging, no auto-park — worth knowing before you buy.</p>
+          <blockquote class="ex-quote">"base has no 360 view and no auto-park"</blockquote>
+          <span class="ex-tag ex-tag-info">buying advice</span>
+        </article>
+        <article class="ex-card">
+          <p class="ex-q">Jerky at low speed — what actually helps?</p>
+          <p class="ex-a">Owners recommend an adaptation reset and clutch relearn — noticeably smoother after.</p>
+          <blockquote class="ex-quote">"adaptation reset is what really fixed the low-speed jerk"</blockquote>
+          <span class="ex-tag">from owner chats</span>
+        </article>
+
+        <article class="ex-card" hidden>
+          <p class="ex-q">Best tyres for UAE heat and highways?</p>
+          <p class="ex-a">Owners favour reputable all-season brands rated for high heat; check the load/speed index.</p>
+          <blockquote class="ex-quote">"went with a proper heat-rated set, no more highway vibration"</blockquote>
+          <span class="ex-tag">from owner chats</span>
+        </article>
+        <article class="ex-card" hidden>
+          <p class="ex-q">Rattle in the roof that isn't the sunroof?</p>
+          <p class="ex-a">Usually a couple of unclipped fasteners — a good dealer re-clips them without stripping the roof.</p>
+          <blockquote class="ex-quote">"turned out to be two loose clips, re-clipped and done"</blockquote>
+          <span class="ex-tag">from owner chats</span>
+        </article>
+        <article class="ex-card" hidden>
+          <p class="ex-q">How long is a service, and are slots free?</p>
+          <p class="ex-a">Usually around 2 hours — I'll show the nearest open slots and book you in.</p>
+          <span class="ex-tag ex-tag-do">→ books a service</span>
+        </article>
+        <article class="ex-card" hidden>
+          <p class="ex-q">Find me a 7-seat SUV under AED 120k with warranty</p>
+          <p class="ex-a">I'll match options to your budget, show a comparison and book a test drive.</p>
+          <span class="ex-tag ex-tag-do">→ match &amp; test drive</span>
+        </article>
+        <article class="ex-card" hidden>
+          <p class="ex-q">Any trade-in on my car?</p>
+          <p class="ex-a">I'll give a quick estimate in a couple of minutes from photos and mileage.</p>
+          <span class="ex-tag ex-tag-do">→ trade-in estimate</span>
+        </article>
+        <article class="ex-card" hidden>
+          <p class="ex-q">What's the monthly finance payment?</p>
+          <p class="ex-a">I'll calculate a monthly figure for your budget and terms.</p>
+          <span class="ex-tag ex-tag-do">→ payment calculation</span>
+        </article>
+      </div>
+
+      <div class="ex-more-wrap">
+        <button id="exMore" class="btn btn-outline on-light" type="button" data-state="more">Show 6 more</button>
+      </div>
+
+      <div class="ex-foot">
+        <a class="btn btn-wa" href="https://wa.me/971500000000?text=Hi%20GPT%20Car%20demo" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.3-1.7A12 12 0 1 0 12 0Z"/></svg>
+          Ask the bot yourself
+        </a>
+        <p class="ex-note">For your brand, the assistant gathers the same living experience from your own chats and forums.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Manager ══════════════ -->
+  <section class="section section-gray">
+    <div class="container manager-block">
+      <div class="manager-text">
+        <span class="eyebrow">Always on</span>
+        <h2>A personal manager for every customer</h2>
+        <p class="manager-tagline">Works <span class="text-teal">24/7</span> and resolves <span class="text-teal">80%</span> of chats</p>
+        <div class="manager-cols">
+          <div class="manager-col">
+            <p class="col-head">Frees your team, sells around the clock</p>
+            <ul>
+              <li>Answers customers day and night</li>
+              <li>Gently offers services and promotions, helps them book</li>
+              <li>Agents focus on the complex cases</li>
+            </ul>
+          </div>
+          <div class="manager-col">
+            <p class="col-head">Lifts loyalty and your digital image</p>
+            <ul>
+              <li>Personalised replies by model, VIN and mileage</li>
+              <li>Uses part numbers and real owner know-how</li>
+              <li>Delivers a premium-service feel</li>
+            </ul>
+          </div>
+        </div>
+        <a class="btn btn-main" href="#lead">Book a pilot</a>
+      </div>
+      <div class="manager-art reveal">
+        <div class="ring-wrap">
+          <div class="ring">
+            <svg width="150" height="150" viewBox="0 0 150 150" aria-hidden="true">
+              <circle cx="75" cy="75" r="62" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="14"/>
+              <circle id="ring80" cx="75" cy="75" r="62" fill="none" stroke="url(#rg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
+              <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1BC9AE"/><stop offset="1" stop-color="#5A6FF0"/></linearGradient></defs>
+            </svg>
+            <div class="ring-num"><strong>80%</strong><span>resolved by AI</span></div>
+          </div>
+          <div class="ring-side">
+            <p>Most customer questions never reach a human — the assistant handles them instantly, in full.</p>
+            <span class="badge-24">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
+              24 / 7, no missed messages
+            </span>
+          </div>
+        </div>
+        <div class="manager-mini">
+          <div class="mini-stat"><strong>&lt; 5s</strong><span>average first reply</span></div>
+          <div class="mini-stat"><strong>2 langs</strong><span>English &amp; Arabic ready</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Scenarios ══════════════ -->
+  <section class="section" id="scenarios">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Playbooks</span>
+        <h2>Ready-made scenarios</h2>
+        <p>Pick from proven scenarios or bring your own</p>
+      </div>
+
+      <div class="scn-grid">
+        <article class="scn-col reveal">
+          <h3 class="scn-title">Service &amp; warranty</h3>
+          <div class="scn-chips" data-chipgroup>
+            <button class="scn-chip is-active" data-msg="0">Diagnose a problem</button>
+            <button class="scn-chip" data-msg="1">Book service &amp; warranty</button>
+            <button class="scn-chip" data-msg="2">Fixes with part numbers</button>
+            <button class="scn-chip" data-msg="3">Parts availability &amp; ETA</button>
+          </div>
+          <div class="scn-chat">
+            <div class="scn-msg client">
+              <div class="d-avatar violet">C</div>
+              <div><strong>Customer</strong><p data-client>Can I book a service through this chat?</p></div>
+            </div>
+            <div class="scn-msg bot">
+              <div class="d-avatar teal-av" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="1.4" fill="#fff"/><rect x="8" y="11" width="12" height="9" rx="3.5" fill="#fff"/><circle cx="11.4" cy="15" r="1.3" fill="#5A6FF0"/><circle cx="16.6" cy="15" r="1.3" fill="#5A6FF0"/></svg></div>
+              <div><strong>GPT Car</strong><p data-bot>Of course — send a convenient date and we'll book your service so you skip the queue.</p></div>
+            </div>
+          </div>
+          <p class="scn-more">+ 8 more scenarios</p>
+        </article>
+
+        <article class="scn-col reveal">
+          <h3 class="scn-title">Buying a car</h3>
+          <div class="scn-chips" data-chipgroup>
+            <button class="scn-chip is-active" data-msg="0">Models &amp; trims</button>
+            <button class="scn-chip" data-msg="1">Prices &amp; test drives</button>
+            <button class="scn-chip" data-msg="2">Trade-in</button>
+            <button class="scn-chip" data-msg="3">Finance &amp; insurance</button>
+          </div>
+          <div class="scn-chat">
+            <div class="scn-msg client">
+              <div class="d-avatar violet">C</div>
+              <div><strong>Customer</strong><p data-client>When can I test drive the Coolray?</p></div>
+            </div>
+            <div class="scn-msg bot">
+              <div class="d-avatar teal-av" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="1.4" fill="#fff"/><rect x="8" y="11" width="12" height="9" rx="3.5" fill="#fff"/><circle cx="11.4" cy="15" r="1.3" fill="#5A6FF0"/><circle cx="16.6" cy="15" r="1.3" fill="#5A6FF0"/></svg></div>
+              <div><strong>GPT Car</strong><p data-bot>We have open slots this week — pick a time and we'll have the car ready for you.</p></div>
+            </div>
+          </div>
+          <p class="scn-more">+ 14 more scenarios</p>
+        </article>
+
+        <article class="scn-col reveal">
+          <h3 class="scn-title">Showroom</h3>
+          <div class="scn-chips" data-chipgroup>
+            <button class="scn-chip is-active" data-msg="0">Hours &amp; contact</button>
+            <button class="scn-chip" data-msg="1">Offers &amp; promotions</button>
+            <button class="scn-chip" data-msg="2">Collect feedback</button>
+            <button class="scn-chip" data-msg="3">About the company</button>
+          </div>
+          <div class="scn-chat">
+            <div class="scn-msg client">
+              <div class="d-avatar violet">C</div>
+              <div><strong>Customer</strong><p data-client>Any promotions this month?</p></div>
+            </div>
+            <div class="scn-msg bot">
+              <div class="d-avatar teal-av" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="1.4" fill="#fff"/><rect x="8" y="11" width="12" height="9" rx="3.5" fill="#fff"/><circle cx="11.4" cy="15" r="1.3" fill="#5A6FF0"/><circle cx="16.6" cy="15" r="1.3" fill="#5A6FF0"/></svg></div>
+              <div><strong>GPT Car</strong><p data-bot>Right now: 15% off service and a 2-year service warranty. Share your number and we'll send the details and book you in.</p></div>
+            </div>
+          </div>
+          <p class="scn-more">+ 12 more scenarios</p>
+        </article>
+      </div>
+
+      <div class="scn-kb reveal">
+        <h3 class="scn-kb-title">
+          <span class="scn-kb-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0EA793" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          Knowledge base
+        </h3>
+        <div class="scn-kb-grid">
+          <div class="kb-card"><span class="kb-badge badge-green">already in the bot</span><p class="kb-name">Official documentation</p><p class="kb-desc">In any language</p></div>
+          <div class="kb-card"><span class="kb-badge badge-green">already in the bot</span><p class="kb-name">Owner chats &amp; popular forums</p><p class="kb-desc">Up-to-date real experience</p></div>
+          <div class="kb-card"><span class="kb-badge badge-blue">quick integration</span><p class="kb-name">Dealer IT systems</p><p class="kb-desc">CRM, databases, Excel</p></div>
+          <div class="kb-card"><span class="kb-badge badge-amber">added in an hour</span><p class="kb-name">Finance programs</p><p class="kb-desc">Loan &amp; insurance products</p></div>
+        </div>
+      </div>
+
+      <div class="center-cta"><a class="btn btn-main" href="#lead">Book a pilot</a></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Analytics ══════════════ -->
+  <section class="section section-gray" id="analytics">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Insight</span>
+        <h2>Full <span class="text-teal">analytics</span> and insight</h2>
+        <p>See how many chats you were losing — and how many the assistant turns into bookings and sales</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card reveal">
+          <div class="kpi-top"><span class="kpi-label">Customer chats</span><span class="kpi-tag">This month</span></div>
+          <p class="kpi-value"><span class="count" data-to="5001" data-fmt="int">0</span></p>
+          <p class="kpi-delta up">↑ +12% vs last month</p>
+          <p class="kpi-note">many used to leave for forum answers — now they come to you</p>
+        </div>
+        <div class="kpi-card reveal">
+          <div class="kpi-top"><span class="kpi-label">Resolved without an agent</span><span class="kpi-tag">This month</span></div>
+          <p class="kpi-value"><span class="count" data-to="4728" data-fmt="int">0</span></p>
+          <p class="kpi-delta up">↑ +8% this week</p>
+          <p class="kpi-note">94% automatically — nights and weekends too, nothing missed</p>
+        </div>
+        <div class="kpi-card kpi-accent reveal">
+          <div class="kpi-top"><span class="kpi-label">Conversion to sales</span><span class="kpi-tag">Yearly</span></div>
+          <p class="kpi-value"><span class="count" data-to="43.1" data-fmt="pct">0</span></p>
+          <p class="kpi-delta up">↑ +5% this quarter</p>
+          <p class="kpi-note">chat → service booking or deal</p>
+        </div>
+        <div class="kpi-card reveal">
+          <div class="kpi-top"><span class="kpi-label">Bot rating (NPS)</span><span class="kpi-tag">Average</span></div>
+          <p class="kpi-value"><span class="count" data-to="8.2" data-fmt="dec">0</span><span class="kpi-suffix">/10</span></p>
+          <p class="kpi-stars">★★★★<span class="star-empty">★</span></p>
+          <p class="kpi-note">from 674 reviews · 85% love the speed</p>
+        </div>
+      </div>
+
+      <div class="funnel-card reveal">
+        <div class="funnel-head"><h3>The customer journey — from question to booking</h3><span class="funnel-period">Last 30 days</span></div>
+        <div class="funnel-list">
+          <div class="funnel-row">
+            <div class="funnel-info"><span class="funnel-step">Arrived from forums, social &amp; website</span><span class="funnel-num text-blue">5,001 chats</span></div>
+            <div class="funnel-bar"><span class="funnel-fill f-blue" data-w="100"></span></div>
+            <span class="funnel-conv">100%</span>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-info"><span class="funnel-step">Answered by the bot — no agent</span><span class="funnel-num text-teal">4,461 chats</span></div>
+            <div class="funnel-bar"><span class="funnel-fill f-teal" data-w="89.2"></span></div>
+            <span class="funnel-conv">89.2%</span>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-info"><span class="funnel-step">Passed to an agent — hot leads</span><span class="funnel-num text-amber">2,498 leads</span></div>
+            <div class="funnel-bar"><span class="funnel-fill f-amber" data-w="56"></span></div>
+            <span class="funnel-conv">56.0%</span>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-info"><span class="funnel-step">Service booking or sale</span><span class="funnel-num text-violet">1,077 actions</span></div>
+            <div class="funnel-bar"><span class="funnel-fill f-violet" data-w="43.1"></span></div>
+            <span class="funnel-conv">43.1%</span>
+          </div>
+        </div>
+        <p class="funnel-foot">Nights and weekends — <strong>0 missed chats</strong>. The assistant always answers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ How it works ══════════════ -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Under the hood</span>
+        <h2>How it <span class="text-teal">works</span></h2>
+        <p>GPT Car runs on the latest AI</p>
+      </div>
+
+      <div class="how-diagram reveal">
+        <div class="how-col how-left">
+          <p class="how-col-title">Knowledge base</p>
+          <div class="how-node">
+            <span class="how-node-ico blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+            <div><p class="how-node-name">Official documentation</p></div>
+          </div>
+          <div class="how-node">
+            <span class="how-node-ico blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="14" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg></span>
+            <div><p class="how-node-name">Forums &amp; owner groups</p></div>
+          </div>
+          <div class="how-node">
+            <span class="how-node-ico blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+            <div><p class="how-node-name">Dealer website &amp; IT systems</p></div>
+          </div>
+        </div>
+
+        <div class="how-center">
+          <div class="how-core">
+            <span class="how-core-ico" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="14" r="2.4" fill="#1BC9AE"/><rect x="14" y="18" width="20" height="16" rx="5" fill="url(#cg)"/><circle cx="20" cy="26" r="2.4" fill="#fff"/><circle cx="28" cy="26" r="2.4" fill="#fff"/><rect x="22.8" y="9" width="2.4" height="4" rx="1.2" fill="#1BC9AE"/><defs><linearGradient id="cg" x1="14" y1="18" x2="34" y2="34"><stop stop-color="#5A6FF0"/><stop offset="1" stop-color="#1BC9AE"/></linearGradient></defs></svg>
+            </span>
+            <p class="how-core-name">GPT Car</p>
+            <p class="how-core-sub">LLM · RAG · NLP</p>
+          </div>
+        </div>
+
+        <div class="how-col how-right">
+          <p class="how-col-title">Channels</p>
+          <div class="how-node">
+            <span class="how-node-ico teal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.3-1.7A12 12 0 1 0 12 0Z"/></svg></span>
+            <div><p class="how-node-name">WhatsApp &amp; messengers</p></div>
+          </div>
+          <div class="how-node">
+            <span class="how-node-ico teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="10" x2="14" y2="10"/></svg></span>
+            <div><p class="how-node-name">Website widget</p></div>
+          </div>
+          <div class="how-node">
+            <span class="how-node-ico teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><line x1="8.1" y1="10.8" x2="15.9" y2="6.2"/><line x1="8.1" y1="13.2" x2="15.9" y2="17.8"/></svg></span>
+            <div><p class="how-node-name">Social media &amp; your live chat</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Pricing ══════════════ -->
+  <section class="section section-gray" id="price">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Pricing</span>
+        <h2>Simple pricing</h2>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card price-featured reveal">
+          <div class="price-card-header">Recommended to start</div>
+          <div class="price-card-body">
+            <p class="plan-name">Light mode</p>
+            <p class="plan-desc">A simple but effective bot — feel the value fast.</p>
+            <p class="plan-price">AED 4,900<span class="plan-suffix"> / launch</span></p>
+            <ul class="plan-features">
+              <li>Knowledge base from owner chats, forums and your documents</li>
+              <li>Tuned to your tone and policies</li>
+              <li>1 channel (e.g. WhatsApp or website widget)</li>
+              <li>Simple analytics: users, chats, clicks</li>
+            </ul>
+          </div>
+        </article>
+        <article class="price-card reveal">
+          <div class="price-card-body">
+            <p class="plan-name">Maximum impact</p>
+            <p class="plan-desc">Advanced conversion scenarios with full integrations</p>
+            <p class="plan-price">Custom</p>
+            <ul class="plan-features">
+              <li>Everything in Light mode</li>
+              <li>Any number of channels, with per-channel scenarios</li>
+              <li>Integration with DB / CRM / ERP / DMS</li>
+              <li>Automated service, trade-in and test-drive booking</li>
+              <li>Handles comments on social media</li>
+              <li>Advanced analytics: tags, conversions, insights</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+      <div class="center-cta">
+        <a class="btn btn-main" href="#lead">Book a pilot</a>
+        <p class="cta-sub-note">Pilot goes live in as little as 3 working days</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Pilot ══════════════ -->
+  <section class="section" id="pilot">
+    <div class="container">
+      <div class="section-head section-head-pilot">
+        <span class="eyebrow">Get started</span>
+        <h2>Launch a pilot in <span class="text-teal">3–5 days</span></h2>
+        <p>Just share your information and get a working bot</p>
+        <span class="pilot-badge">No integrations or complex setup</span>
+      </div>
+
+      <div class="pilot-offer reveal">
+        <span class="pilot-offer-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
+        <p><b>First 100 customer chats are free.</b> Pilot terms are tailored to your dealership.</p>
+      </div>
+
+      <div class="pilot-steps">
+        <article>
+          <span class="step-num">1</span>
+          <span class="step-day">Day 1</span>
+          <h3>Share your knowledge base</h3>
+          <p>Upload files (PDF, Word, Excel) and links to your materials</p>
+        </article>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <article>
+          <span class="step-num">2</span>
+          <span class="step-day">Day 2–3</span>
+          <h3>Describe the behaviour</h3>
+          <p>Tell us the tone of voice and the core rules you want</p>
+        </article>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <article>
+          <span class="step-num">3</span>
+          <span class="step-day">Day 3–5</span>
+          <h3>Get your bot</h3>
+          <p>Test it and go live with a ready-made assistant</p>
+        </article>
+      </div>
+
+      <p class="pilot-effort"><b>From you — just 1–2 hours on materials.</b> We handle gathering owner experience, tuning, and connecting channels.</p>
+
+      <div class="pilot-info-grid">
+        <div class="pilot-box reveal">
+          <h3>The bot's knowledge base</h3>
+          <ul>
+            <li>Any documents (PDF, Word, Excel, txt)</li>
+            <li>Official manuals and catalogues</li>
+            <li>Your company policies and terms</li>
+            <li>Marketing and finance materials</li>
+            <li>Real owner experience from WhatsApp &amp; forums</li>
+          </ul>
+        </div>
+        <div class="pilot-box reveal">
+          <h3>Your pilot GPT Car</h3>
+          <ul>
+            <li>Answers to common customer questions</li>
+            <li>Advice on models, trims and prices</li>
+            <li>Finance options, ways to buy, trade-in</li>
+            <li>Service recommendations and warranty terms</li>
+            <li>Basic payment calculations</li>
+          </ul>
+        </div>
+        <div class="pilot-box pilot-goal reveal">
+          <p class="goal-label">What you'll get</p>
+          <ul class="goal-list">
+            <li>A working bot on your data and owner experience</li>
+            <li>Your first real chats and bookings</li>
+            <li>Clear metrics at the end of the pilot</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pilot-channels">
+        <p class="channels-title">Channels you can connect</p>
+        <div class="channels-list">
+          <span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.3-1.7A12 12 0 1 0 12 0Z"/></svg>WhatsApp</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>Instagram</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="8" y1="21" x2="16" y2="21"/></svg>Website chat</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H10l-4 4v-4H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/></svg>Messenger</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><line x1="8.1" y1="10.8" x2="15.9" y2="6.2"/><line x1="8.1" y1="13.2" x2="15.9" y2="17.8"/></svg>Social media</span>
+        </div>
+      </div>
+
+      <div class="center-cta">
+        <a class="btn btn-main" href="#lead">Start the pilot</a>
+        <p class="cta-sub-note">First 100 chats free · terms tailored to you</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Exclusivity ══════════════ -->
+  <section class="section section-gray" id="exclusive">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">First-mover advantage</span>
+        <h2>Exclusive rights for your <span class="text-teal">brand</span></h2>
+        <p>Secure exclusive rights to GPT Car in your city and protect your territory from competitors</p>
+      </div>
+
+      <div class="exclusive-grid">
+        <div class="city-panel reveal">
+          <p class="city-panel-title">Cities open for exclusivity</p>
+          <table class="city-table">
+            <tbody>
+              <tr><td><strong>Dubai</strong></td><td><span class="tag busy">Taken</span></td><td><strong>Ajman</strong></td><td><span class="tag free">Available</span></td></tr>
+              <tr><td><strong>Abu Dhabi</strong></td><td><span class="tag busy">Taken</span></td><td><strong>Ras Al Khaimah</strong></td><td><span class="tag free">Available</span></td></tr>
+              <tr><td><strong>Sharjah</strong></td><td><span class="tag free">Available</span></td><td><strong>Fujairah</strong></td><td><span class="tag free">Available</span></td></tr>
+              <tr><td><strong>Al Ain</strong></td><td><span class="tag free">Available</span></td><td><strong>Your city</strong></td><td><span class="tag check">We'll check</span></td></tr>
+            </tbody>
+          </table>
+          <p class="city-note">Status updated 20 Aug 2026. Move quickly to lock in your city.</p>
+        </div>
+
+        <div class="exclusive-note reveal">
+          <span class="lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> First come, first served</span>
+          <h3>One dealer per brand, per city</h3>
+          <p>Exclusive rights go to just one dealer for each brand in a city. Submit your request now to lock in the technology advantage before a competitor does.</p>
+        </div>
+      </div>
+
+      <div class="center-cta">
+        <a class="btn btn-main" href="#lead">Lock in exclusivity</a>
+        <p class="cta-sub-note">Consultation and a check of your city's availability — free</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FAQ ══════════════ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Common questions about GPT Car</h2>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary><span>Can a chat be handed to a live agent?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>Yes. Any scenario can end by handing the conversation to your chat or CRM.</p>
+        </details>
+        <details>
+          <summary><span>Does it integrate with our CRM and back-office systems?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>Yes. We connect the bot to your CRM, databases and internal systems via API — leads, bookings and chat history land where you already work. The scope and depth of integrations is scoped to your infrastructure.</p>
+        </details>
+        <details>
+          <summary><span>What about customer data security?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>Data travels over secure channels and is used only to run your bot. Access is scoped, and what's stored and how it's processed is agreed to match your requirements and regulations.</p>
+        </details>
+        <details>
+          <summary><span>Who's responsible for the accuracy of answers?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>The bot answers strictly within your knowledge base and defined rules. Complex or sensitive questions go to an agent, and you can narrow, review and adjust its boundaries — you fully control the tone and scope.</p>
+        </details>
+        <details open>
+          <summary><span>How do we bring customers to the bot?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <div class="faq-body">
+            <p>Driving traffic to the bot is the dealer's part. You can:</p>
+            <ul>
+              <li>Post about the bot on social media and your website</li>
+              <li>Run an email or SMS campaign to customers</li>
+              <li>Train your team to recommend the bot to customers</li>
+            </ul>
+            <p>Customers quickly realise the bot is the most convenient channel. We can also help promote it in relevant owner groups, where the bot gathers brand experience.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span>Why would owners actually use this bot?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>It answers faster than an agent, factors in the model, VIN and context, and leads straight to a useful next step.</p>
+        </details>
+        <details>
+          <summary><span>Can we run it across multiple brands?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>Yes. You can launch a single multi-brand bot, or separate bots per line.</p>
+        </details>
+        <details>
+          <summary><span>How long does launch take?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>A light-mode pilot goes live in 3–5 days. Full mode depends on the integrations.</p>
+        </details>
+        <details>
+          <summary><span>Which channels are supported?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>WhatsApp, Instagram, Messenger, a website widget, social media and other operator chat platforms.</p>
+        </details>
+        <details>
+          <summary><span>Can it use our own documents?</span><svg class="faq-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></summary>
+          <p>Yes. The bot learns from your PDFs, Word, Excel, internal policies and catalogues.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ Lead form ══════════════ -->
+  <section class="cta" id="lead">
+    <div class="container cta-card">
+      <h2>Ready to connect GPT Car?</h2>
+      <p class="cta-card-sub">Tell us a little and we'll propose the right solution for you</p>
+      <form class="lead-form" id="leadForm" novalidate>
+        <input type="text" name="name" placeholder="Name" required autocomplete="name">
+        <div class="form-row-2">
+          <input type="tel" name="phone" placeholder="Phone" required autocomplete="tel">
+          <input type="email" name="email" placeholder="Email" required autocomplete="email">
+        </div>
+        <input type="text" name="city" placeholder="City" required>
+        <label class="robot-check">
+          <input type="checkbox" id="notRobot" required>
+          I'm not a robot
+        </label>
+        <button class="btn btn-main form-submit" type="submit">Send request</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        <p class="msg-label">or message us directly</p>
+        <div class="messengers">
+          <a class="msg-btn wa" href="https://wa.me/971500000000?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20GPT%20Car" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.3-1.7A12 12 0 1 0 12 0Z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<a class="sticky-cta" id="stickyCta" href="#lead">Book a pilot</a>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <a class="brand" href="#top" aria-label="GPT Car">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="1.5" fill="#fff"/><rect x="8" y="11" width="12" height="9" rx="3.5" fill="#fff"/><circle cx="11.4" cy="15" r="1.3" fill="#0EA793"/><circle cx="16.6" cy="15" r="1.3" fill="#0EA793"/></svg></span>
+      GPT&nbsp;<em style="color:var(--teal);font-style:normal">Car</em>
+    </a>
+    <p class="footer-tagline">AI sales &amp; service assistants for automotive retail — UAE</p>
+    <p class="footer-copy">© GPT Car, 2026</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   Hero chat — auto-cycling conversation with typing indicator
+   ============================================================ */
+(function(){
+  const body = document.getElementById('chatBody');
+  if(!body) return;
+  const threads = [
+    {q:"Patrol Y62 — real fuel use in city traffic?", a:"Owners report ~18–20 L/100km in Dubai traffic, less on the highway. Want a full cost-of-ownership estimate for your mileage?", act:["Estimate ownership","Book a test drive"]},
+    {q:"AC not cooling fast enough this summer — normal?", a:"Common in peak heat. Owners fix it with a cabin-filter change + gas top-up. We'll check it at 20% off.", act:["Book AC check","See pricing"]},
+    {q:"Trade-in for my 2021 Coolray?", a:"Yes — a quick estimate in 2 minutes from photos and mileage.", act:["Value my car","Find a new one"]},
+    {q:"Which oil for a Coolray? Everyone argues online.", a:"Owners run 5W-30 to brand spec. Genuine and trusted alternatives in stock, cheaper.", act:["Match by VIN","Book a change"]},
+    {q:"Service time for a Tiggo 8?", a:"About 2 hours. Free slots today at 4:30 and 6:00 PM.", act:["Book 6:00 PM","Pick another time"]},
+    {q:"Need a 7-seat SUV under AED 120k with warranty.", a:"Found 4 matches. Show a comparison and book a test drive?", act:["Show comparison","Book test drive"]}
+  ];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0;
+  function el(cls, html){const d=document.createElement('div');d.className=cls;if(html!=null)d.innerHTML=html;return d;}
+  function clear(){[...body.children].forEach(c=>{c.classList.remove('show');});setTimeout(()=>body.innerHTML='',300);}
+
+  function run(){
+    const t = threads[i % threads.length];
+    body.innerHTML='';
+    const user = el('bubble user', t.q); body.appendChild(user);
+    const typing = el('typing','<span></span><span></span><span></span>');
+    const bot = el('bubble bot', t.a);
+    const acts = el('chat-actions');
+    t.act.forEach((a,idx)=>{const b=el('action-btn'+(idx?' ghost':''),a);acts.appendChild(b);});
+
+    requestAnimationFrame(()=>user.classList.add('show'));
+    if(reduce){
+      body.appendChild(bot);body.appendChild(acts);
+      bot.classList.add('show');acts.classList.add('show');
+      i++;setTimeout(run,4200);return;
+    }
+    setTimeout(()=>{body.appendChild(typing);requestAnimationFrame(()=>typing.classList.add('show'));},700);
+    setTimeout(()=>{typing.remove();body.appendChild(bot);requestAnimationFrame(()=>bot.classList.add('show'));},1900);
+    setTimeout(()=>{body.appendChild(acts);requestAnimationFrame(()=>acts.classList.add('show'));},2300);
+    setTimeout(()=>{clear();},5200);
+    setTimeout(()=>{i++;run();},5600);
+  }
+  run();
+})();
+
+/* ============================================================
+   Reveal on scroll + KPI count-up + funnel fill + ring
+   ============================================================ */
+(function(){
+  const fmt = {
+    int:(n)=>Math.round(n).toLocaleString('en-US'),
+    pct:(n)=>n.toFixed(1)+'%',
+    dec:(n)=>n.toFixed(1)
+  };
+  function countUp(node){
+    const to = parseFloat(node.dataset.to), type = node.dataset.fmt||'int';
+    const dur = 1400, start = performance.now();
+    function tick(now){
+      let p = Math.min((now-start)/dur,1);
+      p = 1-Math.pow(1-p,3);
+      node.textContent = fmt[type](to*p);
+      if(p<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const t = e.target;
+      t.classList.add('in');
+      t.querySelectorAll?.('.count').forEach(countUp);
+      t.querySelectorAll?.('.funnel-fill').forEach(f=>{f.style.width=f.dataset.w+'%';});
+      if(t.querySelector?.('#ring80')){
+        const r=t.querySelector('#ring80');const c=389.6;r.style.transition='stroke-dashoffset 1.6s cubic-bezier(.22,.61,.36,1)';r.style.strokeDashoffset=(c*(1-0.8)).toFixed(1);
+      }
+      io.unobserve(t);
+    });
+  },{threshold:.2});
+  document.querySelectorAll('.reveal, .kpi-grid, .funnel-card').forEach(el=>io.observe(el));
+})();
+
+/* ============================================================
+   Scenario chips
+   ============================================================ */
+(function(){
+  const data = {
+    0:[ // service
+      {c:"Can I book a service through this chat?",b:"Of course — send a convenient date and we'll book your service so you skip the queue."},
+      {c:"My warranty service is due — how do I book it?",b:"I'll check your warranty terms and reserve the next free slot. What date suits you?"},
+      {c:"Brake squeal — what part do I need?",b:"Likely front pads (part #GC-BRK-22). We have them in stock — shall I book a fitting?"},
+      {c:"Is the air filter in stock?",b:"Yes, genuine and a trusted alternative. I can reserve it and book the change."}
+    ],
+    1:[ // buying
+      {c:"When can I test drive the Coolray?",b:"We have open slots this week — pick a time and we'll have the car ready for you."},
+      {c:"What's the price and is it available?",b:"In stock in two trims. I'll send prices and book your test drive — what day works?"},
+      {c:"Any trade-in on my current car?",b:"Yes — a quick estimate in 2 minutes from photos and mileage. Want to try it now?"},
+      {c:"What finance options are there?",b:"I'll calculate a monthly payment for your budget and share the available plans."}
+    ],
+    2:[ // showroom
+      {c:"Any promotions this month?",b:"Right now: 15% off service and a 2-year service warranty. Share your number and we'll send details."},
+      {c:"What are your opening hours?",b:"Open daily 9:00–21:00. Want me to share the location and directions?"},
+      {c:"I'd like to leave feedback.",b:"Thank you! Share your thoughts here and I'll pass them straight to the manager."},
+      {c:"Tell me about your dealership.",b:"We're an authorised dealer with a full service centre and genuine parts. What would you like to know?"}
+    ]
+  };
+  document.querySelectorAll('.scn-col').forEach((col,ci)=>{
+    const chips = col.querySelectorAll('.scn-chip');
+    const cP = col.querySelector('[data-client]');
+    const bP = col.querySelector('[data-bot]');
+    chips.forEach(chip=>{
+      chip.addEventListener('click',()=>{
+        chips.forEach(c=>c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        const idx = +chip.dataset.msg;
+        const set = data[ci] && data[ci][idx];
+        if(!set) return;
+        cP.style.opacity=0;bP.style.opacity=0;
+        setTimeout(()=>{cP.textContent=set.c;bP.textContent=set.b;cP.style.opacity=1;bP.style.opacity=1;},180);
+      });
+    });
+  });
+})();
+
+/* ============================================================
+   Show more examples
+   ============================================================ */
+(function(){
+  const btn = document.getElementById('exMore');
+  if(!btn) return;
+  const hidden = [...document.querySelectorAll('#exGrid .ex-card[hidden]')];
+  btn.addEventListener('click',()=>{
+    if(btn.dataset.state==='more'){
+      hidden.forEach(c=>c.hidden=false);
+      btn.textContent='Show less';btn.dataset.state='less';
+    }else{
+      hidden.forEach(c=>c.hidden=true);
+      btn.textContent='Show 6 more';btn.dataset.state='more';
+      document.getElementById('examples').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+})();
+
+/* ============================================================
+   Sticky CTA + mobile nav
+   ============================================================ */
+(function(){
+  const sticky = document.getElementById('stickyCta');
+  const hero = document.querySelector('.hero');
+  if(sticky && hero){
+    const io = new IntersectionObserver(([e])=>{
+      sticky.classList.toggle('show', !e.isIntersecting);
+    },{threshold:0});
+    io.observe(hero);
+  }
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('menu');
+  if(toggle && menu){
+    toggle.addEventListener('click',()=>{
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');toggle.setAttribute('aria-expanded',false);}));
+  }
+})();
+
+/* ============================================================
+   Lead form (client-side only)
+   ============================================================ */
+(function(){
+  const form = document.getElementById('leadForm');
+  const status = document.getElementById('formStatus');
+  if(!form) return;
+  form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const email = form.email.value.trim();
+    const city = form.city.value.trim();
+    const robot = document.getElementById('notRobot').checked;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if(!name||!phone||!city){status.className='form-status err';status.textContent='Please fill in name, phone and city.';return;}
+    if(!emailOk){status.className='form-status err';status.textContent='Please enter a valid email address.';return;}
+    if(!robot){status.className='form-status err';status.textContent='Please confirm you\'re not a robot.';return;}
+    status.className='form-status ok';
+    status.textContent='Thanks, '+name+'! Your request has been received — we\'ll be in touch shortly.';
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>
